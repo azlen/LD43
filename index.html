@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RPG 9000</title>
+
+
+	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+	<div id="leftContainer">
+		<div><b>name:</b> <span id="name">MAximUs Arbitrus</span></div>
+		<div><b>race:</b> <span id="race">Orc</span></div>
+		<div><b>clss:</b> <span id="class">Fighter</span></div>
+		<div><b>algn:</b> <span id="alignment">Chaotic Neutral</span></div><br>
+
+		<button id="level_up" onclick="showModal('level_up'); hide($('#exBar')); hide(this); hide($('#EX'))" class="hidden">level up</button>
+		<div onclick="showModal('sorry'); hide(this);"><b id="EX">EX</b> <progress id="exBar" value="0" max="100"></progress></div><br>
+
+		<div onclick="showModal('sorry'); hide(this); hide($('#HP')); setTimeout(function(){showModal('dead')}, 1000);"><b id="HP">HP</b> <progress id="hpBar" value="100" max="100"></progress></div>
+		<div onclick="showModal('sorry'); hide(this); hide($('#MP'));" ><b id="MP">MP</b> <progress id="mpBar" value="100" max="100"></progress></div>
+		<div onclick="showModal('sorry'); hide(this); hide($('#ST'));" ><b id="ST">ST</b> <progress id="stBar" value="100" max="100"></progress></div>
+		<div onclick="showModal('sorry'); hide(this); hide($('#DP'));" ><b id="DP">DP</b> <progress id="dpBar" value="50" max="100"></progress></div>
+		<div onclick="showModal('sorry'); hide(this); hide($('#IN'));"><b id="IN">IN</b> <progress id="inBar" value="25" max="100"></progress></div><br>
+
+		<div id="abilityScores">
+			<div id="STR">
+				<b>STR</b> <span class="abilityScore" id="strNum">16</span>
+				<span style="margin-left: 20px;">
+					<button onclick="clickedAbilityScore(this);">+</button>
+					<button onclick="clickedAbilityScore(this);">-</button>
+				</span>
+			</div>
+			<div id="DEX">
+				<b>DEX</b> <span class="abilityScore" id="dexNum">13</span>
+				<span style="margin-left: 20px;">
+					<button onclick="clickedAbilityScore(this);">+</button>
+					<button onclick="clickedAbilityScore(this);">-</button>
+				</span>
+			</div>
+			<div id="CON">
+				<b>CON</b> <span class="abilityScore" id="conNum">12</span>
+				<span style="margin-left: 20px;">
+					<button onclick="clickedAbilityScore(this);">+</button>
+					<button onclick="clickedAbilityScore(this);">-</button>
+				</span>
+			</div>
+			<div id="INT">
+				<b>INT</b> <span class="abilityScore" id="intNum">09</span>
+				<span style="margin-left: 20px;">
+					<button onclick="clickedAbilityScore(this);">+</button>
+					<button onclick="clickedAbilityScore(this);">-</button>
+				</span>
+			</div>
+			<div id="WIS">
+				<b>WIS</b> <span class="abilityScore" id="wisNum">19</span>
+				<span style="margin-left: 20px;">
+					<button onclick="clickedAbilityScore(this);">+</button>
+					<button onclick="clickedAbilityScore(this);">-</button>
+				</span>
+			</div>
+			<div id="CHA">
+				<b>CHA</b> <span class="abilityScore" id="chaNum">11</span>
+				<span style="margin-left: 20px;">
+					<button onclick="clickedAbilityScore(this);">+</button>
+					<button onclick="clickedAbilityScore(this);">-</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div id="middleContainer">
+		<div id="middleContainerCentered">
+			<div style="text-align: center;">
+				<button onclick="hide(this); showModal('map'); addEX(10);">map</button>
+				<button onclick="hide(this); showModal('options'); addEX(5);">options</button>
+				<button onclick="hide(this); showModal('save'); setTimeout(function(){location.reload()}, 1000);">save & quit</button>
+			</div><br><br>
+
+			<div style="text-align: center;">
+				<img id="player" src="SVG/p.svg" height="200"></img>
+				<img id="enemy" height="300"></img>
+			</div>
+
+			Action<br>
+
+			<button onclick="doAction('attack')" id="attack_button">attack</button>
+			<!--<button>cast</button>-->
+			<button onclick="doAction('cook')" id="cook_button">cook</button>
+			<button onclick="doAction('dance')" id="dance_button">dance</button>
+			<button onclick="doAction('defend')" id="defend_button">defend</button>
+			<button onclick="doAction('draw')" id="draw_button">draw</button>
+			<button onclick="doAction('drink')" id="drink_button">drink</button>
+			<button onclick="doAction('eat')" id="eat_button">eat</button>
+			<button onclick="doAction('explore')" id="explore_button">explore</button>
+			<button onclick="doAction('frown')" id="frown_button">frown</button>
+			<button onclick="doAction('jump')" id="jump_button">jump</button>
+			<button onclick="doAction('look')" id="look_button">look</button>
+			<button onclick="doAction('panic')" id="panic_button">panic</button>
+			<button onclick="doAction('pray')" id="pray_button">pray</button>
+			<button onclick="doAction('run')" id="run_button">run</button>
+			<button onclick="doAction('throw')" id="throw_button">throw</button>
+			<button onclick="doAction('say')" id="say_button">say</button>
+			<button onclick="doAction('sing')" id="sing_button">sing</button>
+			<button onclick="doAction('sit')" id="sit_button">sit</button>
+			<button onclick="doAction('smile')" id="smile_button">smile</button>
+			<button onclick="doAction('think')" id="think_button">think</button>
+			<button onclick="doAction('zop')" id="zop_button">zop</button>
+
+			<br><br>
+
+			<!--Special Actions<br>
+			<button>smite</button>-->
+
+			<!--<select>
+				<option>attack</option>
+				<option>cast</option>
+				<option>draw</option>
+				<option>drink</option>
+				<option>eat</option>
+				<option>explore</option>
+				<option>jump</option>
+				<option>explore</option>
+				<option>panic</option>
+				<option>place</option>
+				<option>pray</option>
+				<option>run</option>
+				<option>throw</option>
+				<option>say</option>
+				<option>sit</option>
+			</select>-->
+		</div>
+	</div>
+	<div id="rightContainer">
+		Inventory
+		<div id="inventory">
+			<div class="inventoryBox armor">
+				<img class="hidden" src="SVG/armor.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="wear">wear</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox ashes">
+				<img class="hidden" src="SVG/ashes.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox belt">
+				<img class="hidden" src="SVG/belt.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<!--<option value="wear">wear</option>-->
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox bone">
+				<img class="hidden" src="SVG/bone.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="equip">equip</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox boots">
+				<img class="hidden" src="SVG/boots.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="wear">wear</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox bread">
+				<img class="hidden" src="SVG/bread.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="eat">eat</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox carrot">
+				<img class="hidden" src="SVG/carrot.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="equip">equip</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox cat">
+				<img class="hidden" src="SVG/cat.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="scratch">scratch</option>
+					<option value="pet">pet</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox cloak">
+				<img class="hidden" src="SVG/cloak.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<!--<option value="wear">wear</option>-->
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox coin">
+				<img class="hidden" src="SVG/coin.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox diamond">
+				<img class="hidden" src="SVG/diamond.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox emerald">
+				<img class="hidden" src="SVG/emerald.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox helm">
+				<img class="hidden" src="SVG/helm.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="wear">wear</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox leg_armor">
+				<img class="hidden" src="SVG/leg armor.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="wear">wear</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox log">
+				<img class="hidden" src="SVG/log.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox mace">
+				<img class="hidden" src="SVG/mace.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="equip">equip</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox meat">
+				<img class="hidden" src="SVG/meat.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="eat">eat</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox pants">
+				<img class="hidden" src="SVG/pants.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="wear">wear</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox poop">
+				<img class="hidden" src="SVG/poop.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox potion_1">
+				<img class="hidden" src="SVG/potion 1.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drink">drink</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox potion_2">
+				<img class="hidden" src="SVG/potion 2.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drink">drink</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox scroll">
+				<img class="hidden" src="SVG/scroll.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="use">use</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox shoes">
+				<img class="hidden" src="SVG/shoes.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="wear">wear</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox skull">
+				<img class="hidden" src="SVG/skull.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox staff">
+				<img class="hidden" src="SVG/staff.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="equip">equip</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox sword">
+				<img class="hidden" src="SVG/sword.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="equip">equip</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+			<div class="inventoryBox toque">
+				<img class="hidden" src="SVG/toque.svg"></img>
+				<select class="hidden" onchange="itemAction(this);">
+					<option value=""></option>
+					<option value="wear">wear</option>
+					<option value="drop">drop</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div id="modalContainer">
+		<div class="modal" id="start_modal">
+			Sorry,<br><br>
+			Unfortunately due to time constaints, I have not been able to fully implement <b>RPG 9000</b>. The overall vision turned out to be <i>much too ambitious</i> and as a result I have had to sacrifice a number of features in terms of gameplay.
+			<br><br>
+			Thanks for your understanding,
+			<br>
+			Azlen Elza
+			<br><br>
+			<button onclick="showModal('character_creation1')">begin</button>
+		</div>
+
+		<div class="modal" id="character_creation1_modal">
+			<b>Character Creation</b>
+			<br><br>
+			First, please choose a class
+			<br><br>
+			<button onclick="setClass('barbarian'); showModal('character_creation2')">barbarian</button>
+			<button onclick="setClass('bard'); showModal('character_creation2')">bard</button>
+			<button onclick="setClass('cleric'); showModal('character_creation2')">cleric</button>
+			<button onclick="setClass('druid'); showModal('character_creation2')">druid</button>
+			<button onclick="setClass('fighter'); showModal('character_creation2')">fighter</button>
+			<button onclick="setClass('monk'); showModal('character_creation2')">monk</button>
+			<button onclick="setClass('paladin'); showModal('character_creation2')">paladin</button>
+			<button onclick="setClass('ranger'); showModal('character_creation2')">ranger</button>
+			<button onclick="setClass('rogue'); showModal('character_creation2')">rogue</button>
+			<button onclick="setClass('sorcerer'); showModal('character_creation2')">sorcerer</button>
+			<button onclick="setClass('warlock'); showModal('character_creation2')">warlock</button>
+			<button onclick="setClass('wizard'); showModal('character_creation2')">wizard</button>
+		</div>
+
+		<div class="modal" id="character_creation2_modal">
+			<b>Character Creation</b>
+			<br><br>
+			Next, choose a race
+			<br><br>
+			<button onclick="setRace('dwarf'); showModal('character_creation3')">dwarf</button>
+			<button onclick="setRace('elf'); showModal('character_creation3')">elf</button>
+			<button onclick="setRace('gnome'); showModal('character_creation3')">gnome</button>
+			<button onclick="setRace('halfling'); showModal('character_creation3')">halfling</button>
+			<button onclick="setRace('orc'); showModal('character_creation3')">orc</button>
+			<button onclick="setRace('human'); showModal('character_creation3')">human</button>
+		</div>
+
+		<div class="modal" id="character_creation3_modal">
+			<b>Character Creation</b>
+			<br><br>
+			Now, please choose your alignment (very important, do not skip)
+			<br><br>
+			<button style="float:left;" onclick="setAlignment('left'); showModal('character_creation4')">float left</button>
+			<button style="float:right;" onclick="setAlignment('right'); showModal('character_creation4')">float right</button>
+			<button style="display: block; margin: auto" onclick="setAlignment('center'); showModal('character_creation4')">justified center</button>
+			<br><br>
+			<button onclick="setAlignment('n/a'); showModal('character_creation4')">skip</button>
+		</div>
+
+		<div class="modal" id="character_creation4_modal">
+			<b>Character Creation</b>
+			<br><br>
+			And lastly, choose a name for your character
+			<br><br>
+			<select id="first_name_select">
+				<option value="dr.">Doctor</option>
+				<option value="maximus">Maximus</option>
+				<option value="mr.">Mr.</option>
+				<option value="notatall">Notatall</option>
+				<option value="spork">Spork</option>
+			</select>
+			<select id="last_name_select">
+				<option value="arbitrus">Arbitrus</option>
+				<option value="adventuous">Adventuous</option>
+				<option value="smith">Smith</option>
+			</select>
+			<br><br>
+			<button onclick="setName($('#first_name_select').value + ' ' + $('#last_name_select').value); showModal('character_creation5')">continue</button>
+		</div>
+
+		<div class="modal" id="character_creation5_modal">
+			<b>Character Creation</b>
+			<br><br>
+			<s>Almost done, you just need to set your ability scores real quick</s>
+			<br><br>
+			NOT IMPLEMENTED YET
+			<br><br>
+			<button onclick="showModal('character_creation6')">continue</button>
+		</div>
+
+		<div class="modal" id="character_creation6_modal">
+			<b>Character Creation</b>
+			<br><br>
+			I PROMISE IT'S ALMOST OVER, please choose a starting item
+			<br><br>
+			<button onclick="getItem('armor'); showModal('character_creation7')">armor</button>
+			<button onclick="getItem('carrot'); showModal('character_creation7')">carrot</button>
+			<button onclick="getItem('cat'); showModal('character_creation7')">cat</button>
+			<button onclick="getItem('cloak'); showModal('character_creation7')">cloak</button>
+			<button onclick="getItem('coin'); showModal('character_creation7')">coin</button>
+			<button onclick="getItem('helm'); showModal('character_creation7')">helm</button>
+			<button onclick="getItem('pants'); showModal('character_creation7')">pants</button>
+			<button onclick="getItem('toque'); showModal('character_creation7')">toque</button>
+		</div>
+
+		<div class="modal" id="character_creation7_modal">
+			<b>Character Creation</b>
+			<br><br>
+			Before we begin I would like to thank our sponsors...
+			<br><br>
+			<button onclick="hideModal(); showUI();">begin</button>
+		</div>
+
+		<div class="modal" id="cat_error_modal">
+			CAT ERROR: INSUFFICIENT MEOW<br><br>
+			<button onclick="hideModal()">@$HF*(BVKS</button>
+			<button onclick="hideModal()">GFS347DFH</button>
+			<button onclick="hideModal()">Q024CATJVDl</button>
+		</div>
+
+		<div class="modal" id="map_modal">
+			The world map is currently under construction, please come back later.<br><br>
+			For now, it would suffice to imagine a world beyond size, an enourmous handcrafted fantasy land. The hills are filled with dungeons. Villages are nestled in valleys. Thousands of different species of creatures live in the forests and roam the many plains, swim below the vast lakes. A world filled with opportunity, every blacksmith, farmer, and king, has a quest for you with handsome reward. Imagine this world in all its natural beauty, bask in the rays of sun shining through the foliage, listen to the waves rolling in and the birds cawing up above. It is almost at your fingertips...
+			<br><br>
+			+10 EXP
+			<br><br>
+			<button onclick="hideModal()">wow I'm excite</button>
+			<button onclick="hideModal()">hype!</button>
+			<button onclick="hideModal()">super duper</button>
+		</div>
+
+		<div class="modal" id="options_modal">
+			The options menu will contain all of the accessibility options for the game. You will be able to turn on the music and sound effects from here, and set subtitles for spoken dialogue. There will be options for everything and anything that you can imagine. I can't wait to show you this next-generation option menu once it is complete.
+			<br></br>
+			+5 EXP
+			<br><br>
+			<button onclick="hideModal()">option 1</button>
+			<button onclick="hideModal()">option 2</button>
+			<button onclick="hideModal()">option 3</button>
+		</div>
+
+		<div class="modal" id="no_STR_modal">
+			The STRENGTH ability has not been fully implemented yet...
+			<br><br>
+			<button onclick="hideModal(); setTimeout(function() { showModal('no_STR2') }, 500)">continue</button>
+		</div>
+		<div class="modal" id="no_STR2_modal">
+			You feel very weak...
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="no_DEX_modal">
+			The DEXTERITY ability has not been fully implemented yet...
+			<br><br>
+			<button onclick="hideModal(); setTimeout(function() { showModal('no_DEX2') }, 500)">continue</button>
+		</div>
+		<div class="modal" id="no_DEX2_modal">
+			You start to feel ambidextrously incompetent...
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="no_CON_modal">
+			The CONSTITUTION ability has not been fully implemented yet...
+			<br><br>
+			<button onclick="hideModal(); setTimeout(function() { showModal('dead') }, 500)">continue</button>
+		</div>
+
+		<div class="modal" id="no_INT_modal">
+			The INTELLIGENCE ability has not been fully implemented yet...
+			<br><br>
+			<button onclick="hideModal(); setTimeout(function() { showModal('no_INT2') }, 500)">continue</button>
+		</div>
+		<div class="modal" id="no_INT2_modal">
+			Your head feels lighter, you have no idea why...
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="no_WIS_modal">
+			The WISDOM ability has not been fully implemented yet...
+			<br><br>
+			<button onclick="hideModal(); setTimeout(function() { showModal('no_WIS2') }, 500)">continue</button>
+		</div>
+		<div class="modal" id="no_WIS2_modal">
+			A faint smile passes accross your face, "I am goldfish" you cry as you rush back into the fray.
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="no_CHA_modal">
+			The CHARISMA ability has not been fully implemented yet...
+			<br><br>
+			<button onclick="hideModal(); setTimeout(function() { showModal('no_CHA2') }, 500)">continue</button>
+		</div>
+		<div class="modal" id="no_CHA2_modal">
+			Your face sags a few extra inches...
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="action_modal">
+			You try to <span class="action_modal_action"></span> but find that you no longer remember how to <span class="action_modal_action"></span>. What does it mean to <span class="action_modal_action"></span>? It must have been something really important...
+			<br><br>
+			+10 EXP
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="level_up_modal">
+			You feel energy rushing through your veins, you look up and you see... ERROR: please try again.
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="sorry_modal">
+			Sorry, you cannot do that...
+			<br><br>
+			<button onclick="hideModal();">okay...</button>
+		</div>
+
+		<div class="modal" id="explore_nothing_modal">
+			You find nothing
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="explore_monster_modal">
+			You find an <span class="monster_modal_monster"></span>
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="victory_modal">
+			You defeated the <span class="victory_modal_monster"></span>, you find an <span class="victory_modal_reward"></span>!
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="no_enemy_modal">
+			There is nothing there to attack, you begin to doubt your abilities.
+			<br><br>
+			<button onclick="hideModal();">continue</button>
+		</div>
+
+		<div class="modal" id="save_modal">
+			AN ERROR HAS OCCURRED IN SAVING THE GAME
+		</div>
+
+		<div class="modal" id="dead_modal">
+			You died! Try again?<br><br>
+			<button onclick="location.reload();">yes</button>
+			<button onclick="location.reload();">no</button>
+		</div>
+	</div>
+
+	<script src="main.js"></script>
+</body>
+</html>

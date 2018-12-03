@@ -1,0 +1,68 @@
+
+
+Features
+- inventory system
+- battle system
+- heart monitor
+- weapons
+- shields
+- armour
+- towns
+- cities
+- all kinds of monsters
+- boss monsters
+- skills
+    + swimming
+    + climbing
+- companions
+- potions
+- money / gold
+- shops
+
+
+Buttons / UI
+- attack
+    + different kinds of attacks and stances
+- cast spell
+- experience bar
+- level up
+- health bar
+- mana bar
+- stamina bar
+- happiness bar
+- inebriation bar
+- ability scores
+    + strength
+    + dexterity
+    + intelligence
+    + wisdom
+    + constitution
+    + charisma
+- heartbeat monitor
+- weapon condition
+    + clean weapon
+- map / change location / explore
+- pick up / put down
+- actions
+    + drink / quaff
+    + jump
+    + pray
+    + quit
+    + look
+    + fire
+    + eat
+    + chat
+    + apply
+    + ride
+    + sit
+    + throw
+    + wear
+    + panic
+    + run away
+    + 
+
+Town
+- arcade
+- tavern
+- shops
+- 
