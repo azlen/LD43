@@ -133,7 +133,7 @@ function itemAction(selectElement) {
 		showModal('cat_error');
 		removeItem(item);
 		hide(inventoryBox);
-	} else if (action === 'drop') {
+	} else if (action === 'drop' || true) {
 		removeItem(item);
 		if (equippedItem === item) {
 			$('#player').setAttribute('src', 'SVG/p.svg');
